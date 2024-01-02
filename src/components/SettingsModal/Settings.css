@@ -1,0 +1,42 @@
+.dashboard {
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #dcdcdc;
+    padding: 0px;
+}
+
+.dashboard__container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    background-color: #dcdcdc;
+    padding: 15px;
+}
+
+.dashboard__btn {
+    padding: 10px;
+    font-size: 18px;
+    margin-top: 10px;
+    border: none;
+    color: white;
+    background-color: black;
+}
+
+.close-button{
+    all:unset;
+    cursor: pointer;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close{
+    text-align: right;
+    font-size: 20px;
+}
+#settings-modal{
+    display: none;
+}
