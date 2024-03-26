@@ -28,3 +28,7 @@ package.json
 .firebase/hosting.cHVibGlj.cache
 .firebase/hosting.YnVpbGQ.cache
 src/firebase.js
+ui-debug.log
+firebase-debug.log
+firestore-debug.log
+storage.rules
