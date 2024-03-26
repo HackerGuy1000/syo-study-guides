@@ -5,13 +5,13 @@ import {
     auth,
     registerWithEmailAndPassword,
     signInWithGoogle,
-} from "../../firebase";
+} from "../../../firebase";
 import "./Register.css";
 function Register() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const navigate = useNavigate();
     const register = () => {
         if (!name) alert("Please enter name");
@@ -20,7 +20,7 @@ function Register() {
     useEffect(() => {
         if (loading) return;
         if (user) navigate("/dashboard", { replace: true })
-    }, [user, loading]);
+    }, [user, loading,navigate]);
     return (
         <div className="register">
             <div className="register__container">

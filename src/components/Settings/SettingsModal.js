@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
-import "./Settings.css";
+import "./SettingsModal.css";
 import { auth, db, logout } from "../../firebase";
 import { query, collection, getDocs, where } from "firebase/firestore";
 
 function SettingsModal() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user, loading] = useAuthState(auth);
   const [name, setName] = useState("");
   const [admin, setAdmin] = useState(1);
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ function SettingsModal() {
       return navigate("/");
     }
     fetchUserName();
-  }, [user, loading]);
+  }, [user, loading,navigate]);
   return (
     <dialog className="dashboard" id="settings-modal" close="true">
       <div className="dashboard__container">

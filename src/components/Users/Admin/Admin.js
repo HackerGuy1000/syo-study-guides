@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import "./Admin.css"
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth, storage } from "../../firebase";
-import { getDownloadURL, ref, uploadBytes, listAll } from 'firebase/storage'
+import {storage } from "../../../firebase";
+import { ref, uploadBytes, listAll } from 'firebase/storage'
 
 
 function Admin() {
-    const [user, loading, error] = useAuthState(auth);
+    // const [user, loading, error] = useAuthState(auth);
 
     const [file, setFile] = useState(null);
 
@@ -28,7 +27,7 @@ function Admin() {
         const fileModal = document.getElementById("file-selector");
         const selection = document.getElementById("path").value
         console.log(selection);
-        if (selection != "Select" && file) {
+        if (selection !== "Select" && file) {
             const storageRef = ref(storage, `${selection}/${file.name}`)
             uploadBytes(storageRef, file).then(() => {
                 listAll(storageRef).then(async (rest) => {
@@ -60,8 +59,6 @@ function Admin() {
                             id="path"
                             name="path"
                             className="inputName"
-                        // value={formik.values.size}
-                        // onChange={formik.handleChange}
                         >
                             <option disabled hidden defaultValue>Select</option>
                             <option value="APWH">APWH</option>
