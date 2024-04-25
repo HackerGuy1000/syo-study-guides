@@ -36,7 +36,7 @@ function SettingsModal() {
       return navigate("/");
     }
     fetchUserName();
-  }, [user, loading,navigate]);
+  }, [user, loading, navigate]);
   return (
     <dialog className="dashboard" id="settings-modal" close="true">
       <div className="dashboard__container">

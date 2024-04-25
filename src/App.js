@@ -6,7 +6,6 @@ import Register from './components/Authentication/Register/Register';
 import Reset from './components/Reset/Reset';
 import Dashboard from './components/Dashboard/Dashboard';
 import Viewer from './components/Viewer/Viewer';
-import RequireAuth from './components/Authentication/RequireAuth';
 import Missing from './Pages/404/Missing';
 
 function App() {
@@ -21,10 +20,8 @@ function App() {
           <Route exact path="/viewer-test" element={<Viewer />} />
 
           {/* Protected Routes  */}
-          <Route element={<RequireAuth />}>
             <Route exact path="/dashboard" element={<Dashboard />} />
             <Route exact path="/viewer" element={<Viewer />} />
-          </Route>
 
         </Routes>
       </Router>

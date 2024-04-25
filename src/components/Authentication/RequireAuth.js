@@ -3,6 +3,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../../firebase";
 import { useState } from "react";
 
+// Current implementation of creating protected routes, will probably change this later based on different user status implementations 
 const RequireAuth = () => {
     const [user, loading] = useAuthState(auth);
 
@@ -11,7 +12,7 @@ const RequireAuth = () => {
     const location = useLocation();
 
 
-
+    
     return (
         user
             ? <Outlet />

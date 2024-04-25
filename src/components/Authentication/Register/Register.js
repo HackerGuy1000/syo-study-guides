@@ -8,11 +8,15 @@ import {
 } from "../../../firebase";
 import "./Register.css";
 function Register() {
+    
+    // Use state variables for user information toc reate an account
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [user, loading] = useAuthState(auth);
+    
     const navigate = useNavigate();
+    
     const register = () => {
         if (!name) alert("Please enter name");
         registerWithEmailAndPassword(name, email, password);
@@ -21,6 +25,8 @@ function Register() {
         if (loading) return;
         if (user) navigate("/dashboard", { replace: true })
     }, [user, loading,navigate]);
+    
+    // Box to register information and create and account
     return (
         <div className="register">
             <div className="register__container">

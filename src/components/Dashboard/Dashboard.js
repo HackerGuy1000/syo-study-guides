@@ -9,9 +9,13 @@ import Admin from "../Users/Admin/Admin";
 import SettingsCog from "../Settings/SettingsCog";
 
 function Dashboard() {
+    
+    // User use state variables
     const [user, loading] = useAuthState(auth);
     const [admin, setAdmin] = useState(1);
     const navigate = useNavigate();
+    
+    
     const fetchUserName = async () => {
         try {
             const q = query(collection(db, "users"), where("uid", "==", user?.uid));
@@ -32,10 +36,12 @@ function Dashboard() {
         }
         fetchUserName();
     }, [user, loading, navigate]);
+    
     return (
         <>
             <div>
                 <SettingsCog/>
+                {/* Shows admin panel only if the users admin value is greater than 1, indicating that they have the proper permissions */}
                 {admin > 1 && <Admin />}
             </div>
         </>
