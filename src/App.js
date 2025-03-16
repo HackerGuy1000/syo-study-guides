@@ -5,7 +5,7 @@ import Login from './components/Authentication/Login/Login';
 import Register from './components/Authentication/Register/Register';
 import Reset from './components/Reset/Reset';
 import Dashboard from './components/Dashboard/Dashboard';
-import Viewer from './components/Viewer/Viewer';
+import { default as Viewer } from './components/Viewer/Viewer';
 import Missing from './Pages/404/Missing';
 
 function App() {

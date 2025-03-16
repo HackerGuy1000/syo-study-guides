@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import "./Admin.css"
-import {storage } from "../../../firebase";
+import { storage } from "../../../firebase";
 import { ref, uploadBytes, listAll } from 'firebase/storage'
 
 
@@ -8,10 +8,18 @@ function Admin() {
     // const [user, loading, error] = useAuthState(auth);
 
     const [file, setFile] = useState(null);
+    const [fileName, setFileName] = useState(null);
 
     const handleFileChange = (e) => {
         if (e.target.files[0]) {
             setFile(e.target.files[0]);
+        }
+    };
+
+    const handleNameChange = (e) => {
+        if (e.target.value) {
+            setFileName(e.target.value);
+            console.log(fileName);
         }
     };
 
@@ -29,9 +37,14 @@ function Admin() {
         console.log(selection);
         if (selection !== "Select" && file) {
             const storageRef = ref(storage, `${selection}/${file.name}`)
-            uploadBytes(storageRef, file).then(() => {
+
+            const metadata = {
+                name: fileName
+            }
+
+            uploadBytes(storageRef, file,metadata).then(() => {
                 listAll(storageRef).then(async (rest) => {
-                    
+                    console.log(rest);
                 })
                 alert("File Uploaded");
                 fileModal.close();
@@ -49,6 +62,7 @@ function Admin() {
         <div className="admin-page">
             <div className="admin-box">
                 <input className="input-button" id="files" type="file" onChange={handleFileChange} />
+                <input type="text" placeholder="File Name" onChange={handleNameChange} />
                 <button className="upload" onClick={handlePath}>Choose Path</button>
             </div>
             <dialog id="file-selector" close="true">
@@ -66,8 +80,10 @@ function Admin() {
                             <option value="Vexology">Vexology</option>
                             <option value="Spanish">Spanish</option>
                             <option value="Chemistry">Chemistry</option>
+                            <option value="Physics">Physics</option>
                         </select>
                     </div>
+
                     <button className="upload" onClick={handleUpload}>Upload</button>
                 </div>
             </dialog>

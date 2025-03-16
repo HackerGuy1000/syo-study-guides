@@ -10,3 +10,8 @@
 .open-button {
     all: unset;
 }
+#pdf-viewer{
+    padding-top: 5%;
+    width:100vw;
+    height: 100vh;
+}

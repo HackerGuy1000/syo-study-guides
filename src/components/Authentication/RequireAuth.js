@@ -12,7 +12,7 @@ const RequireAuth = () => {
     const location = useLocation();
 
 
-    
+
     return (
         user
             ? <Outlet />
