@@ -4,47 +4,88 @@ import "./Viewer.css";
 import SettingsCog from "../Settings/SettingsCog";
 
 import { storage } from "../../firebase";
-import { ref, getDownloadURL, listAll, getMetadata } from "firebase/storage";
+import { ref, listAll, getDownloadURL } from "firebase/storage";
 
 const Viewer = () => {
-    const storageRef = ref(storage, `Physics/Summer Assignment with Solutions.pdf`)
-
-    const [pdfUrl, setPdfUrl] = useState(null);
-
+    const [folders, setFolders] = useState([]);
+    const [currentFolder, setCurrentFolder] = useState(null);
+    const [fileLinks, setFileLinks] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        const fileArray = [];
+        const fetchFolders = async () => {
+            try {
+                const storageRef = ref(storage);
+                const res = await listAll(storageRef);
+                const folderNames = res.prefixes.map(folderRef => folderRef.name);
+                setFolders(folderNames);
+            } catch (error) {
+                console.error("Error listing folders:", error);
+            }
+        };
 
-        listAll(storageRef).then((res) => {
-            getMetadata(storageRef)
-                .then((metadata) => {
-                    console.log(metadata);
-                })
-                .catch((error) => {
-                    // Uh-oh, an error occurred!
-                });
+        fetchFolders();
+    }, []);
 
-        })
+    useEffect(() => {
+        if (currentFolder) {
+            const fetchFileLinks = async () => {
+                setLoading(true);
+                try {
+                    const folderRef = ref(storage, `${currentFolder}/`);
+                    const res = await listAll(folderRef);
+                    const links = await Promise.all(
+                        res.items.map(async (itemRef) => {
+                            const url = await getDownloadURL(itemRef);
+                            return { name: itemRef.name, url };
+                        })
+                    );
+                    setFileLinks(links);
+                } catch (error) {
+                    console.error("Error listing files:", error);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        getDownloadURL(storageRef).then((url) => {
-            setPdfUrl(url);
-        })
-    }, [])
-
+            fetchFileLinks();
+        }
+    }, [currentFolder]);
 
     return (
         <>
             <SettingsCog />
-            {pdfUrl !== null && (
+            {!currentFolder ? (
+                <ul>
+                    {folders.map((folder, index) => (
+                        <li key={index}>
+                            <button onClick={() => setCurrentFolder(folder)}>
+                                {folder}
+                            </button>
+                        </li>
+                    ))}
+                </ul>
+            ) : (
                 <>
-                    <dialogog></dialogog>
-                    <embed type="application/pdf" src={pdfUrl} id="pdf-viewer" width="100%" height="100%" />
+                    <button onClick={() => setCurrentFolder(null)}>Back to folders</button>
+                    {loading ? (
+                        <p>Loading files...</p>
+                    ) : (
+                        <ul>
+                            {fileLinks.map((file, index) => (
+                                <li key={index}>
+                                    <a href={file.url} target="_blank" rel="noopener noreferrer">
+                                        {file.name}
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
                 </>
             )}
         </>
     );
 }
-
 
 export default Viewer;
 
