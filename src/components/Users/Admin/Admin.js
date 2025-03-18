@@ -61,9 +61,10 @@ function Admin() {
     return (
         <div className="admin-page">
             <div className="admin-box">
-                <input className="input-button" id="files" type="file" onChange={handleFileChange} />
-                <input type="text" placeholder="File Name" onChange={handleNameChange} />
-                <button className="upload" onClick={handlePath}>Choose Path</button>
+                <input className="input-button" id="files" type="file" hidden onChange={handleFileChange} />
+                <label id="file-button" for="files">Choose File</label>
+                <input className = "input-text" type="text" placeholder="File Name" onChange={handleNameChange} />
+                <button className="upload-file" onClick={handlePath}>Choose Path</button>
             </div>
             <dialog id="file-selector" close="true">
                 <div className="field">

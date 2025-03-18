@@ -1,4 +1,5 @@
 import SettingsModal from './SettingsModal';
+import "./SettingsCog.css";
 
 function SettingsCog() {
 

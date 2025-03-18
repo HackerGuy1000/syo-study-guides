@@ -7,16 +7,17 @@ import {
     signInWithGoogle,
 } from "../../../firebase";
 import "./Register.css";
+import Google from "../../resources/Google";
 function Register() {
-    
+
     // Use state variables for user information toc reate an account
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [user, loading] = useAuthState(auth);
-    
+
     const navigate = useNavigate();
-    
+
     const register = () => {
         if (!name) alert("Please enter name");
         registerWithEmailAndPassword(name, email, password);
@@ -24,8 +25,8 @@ function Register() {
     useEffect(() => {
         if (loading) return;
         if (user) navigate("/dashboard", { replace: true })
-    }, [user, loading,navigate]);
-    
+    }, [user, loading, navigate]);
+
     // Box to register information and create and account
     return (
         <div className="register">
@@ -58,10 +59,11 @@ function Register() {
                     className="register__btn register__google"
                     onClick={signInWithGoogle}
                 >
+                    <Google className="register__google-icon"/>
                     Register with Google
                 </button>
-                <div>
-                    Already have an account? <Link to="/">Login</Link> now.
+                <div className="login__text">
+                    Already have an account? <Link className="login__link" to="/">Login</Link> now.
                 </div>
             </div>
         </div>

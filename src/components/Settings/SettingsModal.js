@@ -26,7 +26,6 @@ function SettingsModal() {
     const modal = document.getElementById("settings-modal");
     modal.close();
     modal.style.display = "none";
-    console.log("Hiding modal!!!");
   }
   useEffect(() => {
     if (loading) {
